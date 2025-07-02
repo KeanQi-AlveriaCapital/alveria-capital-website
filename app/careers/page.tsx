@@ -14,23 +14,27 @@ export default function Careers() {
   const { t } = useLanguage();
   const [currentSection, setCurrentSection] = useState("hero");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  
+
   // Register GSAP plugins
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Set up intersection observer to change nav mode
-    const sections = document.querySelectorAll('section[data-section]');
-    
+    const sections = document.querySelectorAll("section[data-section]");
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const sectionName = entry.target.getAttribute('data-section');
+            const sectionName = entry.target.getAttribute("data-section");
             if (sectionName) {
               setCurrentSection(sectionName);
               // Set dark mode for navigation on light sections
-              if (sectionName === 'openings' || sectionName === 'benefits' || sectionName === 'culture') {
+              if (
+                sectionName === "openings" ||
+                sectionName === "benefits" ||
+                sectionName === "culture"
+              ) {
                 setIsDarkMode(true);
               } else {
                 setIsDarkMode(false);
@@ -40,14 +44,14 @@ export default function Careers() {
         });
       },
       {
-        threshold: 0.5
+        threshold: 0.5,
       }
     );
-    
-    sections.forEach(section => {
+
+    sections.forEach((section) => {
       observer.observe(section);
     });
-    
+
     return () => {
       observer.disconnect();
     };
@@ -56,71 +60,105 @@ export default function Careers() {
   // Sample job openings
   const jobOpenings = [
     {
-      title: "Senior Quantitative Analyst",
-      tags: [
-        { text: "New York, NY", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" }
-      ],
-      description: "We're seeking an experienced Quantitative Analyst with a strong background in statistical modeling and machine learning to join our research team.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true
-      }
-    },
-    {
-      title: "Investment Strategist",
-      tags: [
-        { text: "London, UK", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" }
-      ],
-      description: "Join our investment team to develop and implement innovative investment strategies across traditional and digital asset classes.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true
-      }
-    },
-    {
-      title: "Software Engineer - Trading Systems",
+      title: "Admin Assistant",
       tags: [
         { text: "Remote", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" }
+        { text: "Full-time", backgroundColor: "var(--dawn)" },
       ],
-      description: "Help build and maintain our proprietary trading systems with a focus on low-latency performance and reliability.",
+      description:
+        "Provides administrative and organizational support to the trading or research team. Handles scheduling, documentation, travel arrangements, and office coordination to ensure smooth daily operations.",
       link: {
         text: "Apply now",
         url: "#",
         color: "var(--sherpa-blue)",
-        showArrow: true
-      }
+        showArrow: true,
+      },
     },
     {
-      title: "Client Relationship Manager",
+      title: "Compliance Officer",
       tags: [
         { text: "Singapore", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" }
+        { text: "Full-time", backgroundColor: "var(--dawn)" },
       ],
-      description: "Work directly with our clients to understand their investment goals and provide exceptional service.",
+      description:
+        "Ensures the company adheres to financial regulations, trading laws, and internal policies. Acts as a safeguard against regulatory breaches and helps manage risk.",
       link: {
         text: "Apply now",
         url: "#",
         color: "var(--sherpa-blue)",
-        showArrow: true
-      }
-    }
+        showArrow: true,
+      },
+    },
+    {
+      title: "Senior Trader",
+      tags: [
+        { text: "Remote", backgroundColor: "var(--submarine)" },
+        { text: "Full-time", backgroundColor: "var(--dawn)" },
+      ],
+      description:
+        "Leads the design, execution, and optimization of trading strategies. Responsible for significant capital deployment, managing risk, and mentoring junior traders.",
+      link: {
+        text: "Apply now",
+        url: "#",
+        color: "var(--sherpa-blue)",
+        showArrow: true,
+      },
+    },
+    {
+      title: "Trader",
+      tags: [
+        { text: "Singapore", backgroundColor: "var(--submarine)" },
+        { text: "Full-time", backgroundColor: "var(--dawn)" },
+      ],
+      description:
+        "Executes trades and monitors market trends to identify profit opportunities. Balances speed and accuracy, often within automated or semi-automated systems.",
+      link: {
+        text: "Apply now",
+        url: "#",
+        color: "var(--sherpa-blue)",
+        showArrow: true,
+      },
+    },
+    {
+      title: "Junior Frontend Developer - Quantitative Trading Systems",
+      tags: [
+        { text: "Singapore", backgroundColor: "var(--submarine)" },
+        { text: "Full-time", backgroundColor: "var(--dawn)" },
+      ],
+      description:
+        "Assists in building and maintaining user interfaces for trading platforms and data dashboards. Works closely with traders, quants, and backend developers.",
+      link: {
+        text: "Apply now",
+        url: "#",
+        color: "var(--sherpa-blue)",
+        showArrow: true,
+      },
+    },
+    {
+      title: "Quantitative Researcher",
+      tags: [
+        { text: "Singapore", backgroundColor: "var(--submarine)" },
+        { text: "Full-time", backgroundColor: "var(--dawn)" },
+      ],
+      description:
+        "Develops and tests mathematical models to generate alpha and manage risk. Works at the intersection of statistics, machine learning, and financial theory.",
+      link: {
+        text: "Apply now",
+        url: "#",
+        color: "var(--sherpa-blue)",
+        showArrow: true,
+      },
+    },
   ];
 
   return (
     <div className="relative">
       {/* Fixed Navigation */}
       <Navigation isDarkMode={isDarkMode} />
-      
+
       {/* Hero Section */}
-      <section 
-        data-section="hero" 
+      <section
+        data-section="hero"
         className="w-[100vw] h-[100vh] relative flex items-center justify-center overflow-hidden"
       >
         {/* Background Video */}
@@ -136,7 +174,7 @@ export default function Careers() {
           </video>
           <div className="absolute inset-0 bg-[var(--midnight)]/60"></div>
         </div>
-        
+
         {/* Hero Content */}
         <div className="container-responsive relative z-10 flex flex-col items-center">
           <motion.div
@@ -148,7 +186,7 @@ export default function Careers() {
             <AnimatedText
               as="h1"
               className="text-h3 text-center mb-6"
-              style={{ color: 'var(--mercury)' }}
+              style={{ color: "var(--mercury)" }}
               delay={0.1}
             >
               Careers
@@ -158,17 +196,18 @@ export default function Careers() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-p4 text-center max-w-2xl mx-auto"
-              style={{ color: 'var(--mercury)' }}
+              style={{ color: "var(--mercury)" }}
             >
-              Join our team of talented professionals and help shape the future of investment management
+              Join our team of talented professionals and help shape the future
+              of investment management
             </motion.p>
           </motion.div>
         </div>
       </section>
-      
+
       {/* Current Openings Section */}
-      <section 
-        data-section="openings" 
+      <section
+        data-section="openings"
         className="w-[100vw] min-h-[100vh] flex items-center justify-center bg-[var(--mercury)]"
       >
         <div className="container-responsive py-[100px]">
@@ -179,15 +218,15 @@ export default function Careers() {
             columns={{
               mobile: 1,
               tablet: 2,
-              desktop: 2
+              desktop: 2,
             }}
           />
         </div>
       </section>
-      
+
       {/* Benefits Section */}
-      <section 
-        data-section="benefits" 
+      <section
+        data-section="benefits"
         className="w-[100vw] min-h-[100vh] flex items-center justify-center bg-[var(--submarine)]"
       >
         <div className="container-responsive py-[100px]">
@@ -198,54 +237,85 @@ export default function Careers() {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h2 className="text-h3 text-left mb-8" style={{ color: 'var(--midnight)' }}>
+            <h2
+              className="text-h3 text-left mb-8"
+              style={{ color: "var(--midnight)" }}
+            >
               Benefits & Perks
             </h2>
-            
+
             <div className="space-y-8">
               <div>
-                <h3 className="text-h2 text-left mb-4" style={{ color: 'var(--midnight)' }}>
+                <h3
+                  className="text-h2 text-left mb-4"
+                  style={{ color: "var(--midnight)" }}
+                >
                   Competitive Compensation
                 </h3>
-                <p className="text-p4 text-left" style={{ color: 'var(--outer-space)' }}>
-                  We offer industry-leading salaries and bonus structures, with significant performance-based incentives.
+                <p
+                  className="text-p4 text-left"
+                  style={{ color: "var(--outer-space)" }}
+                >
+                  We offer industry-leading salaries and bonus structures, with
+                  significant performance-based incentives.
                 </p>
               </div>
-              
+
               <div>
-                <h3 className="text-h2 text-left mb-4" style={{ color: 'var(--midnight)' }}>
+                <h3
+                  className="text-h2 text-left mb-4"
+                  style={{ color: "var(--midnight)" }}
+                >
                   Health & Wellness
                 </h3>
-                <p className="text-p4 text-left" style={{ color: 'var(--outer-space)' }}>
-                  Comprehensive health insurance, mental health resources, gym memberships, and wellness programs.
+                <p
+                  className="text-p4 text-left"
+                  style={{ color: "var(--outer-space)" }}
+                >
+                  Comprehensive health insurance, mental health resources, gym
+                  memberships, and wellness programs.
                 </p>
               </div>
-              
+
               <div>
-                <h3 className="text-h2 text-left mb-4" style={{ color: 'var(--midnight)' }}>
+                <h3
+                  className="text-h2 text-left mb-4"
+                  style={{ color: "var(--midnight)" }}
+                >
                   Growth & Development
                 </h3>
-                <p className="text-p4 text-left" style={{ color: 'var(--outer-space)' }}>
-                  Continuous learning opportunities, professional certifications, and career advancement paths.
+                <p
+                  className="text-p4 text-left"
+                  style={{ color: "var(--outer-space)" }}
+                >
+                  Continuous learning opportunities, professional
+                  certifications, and career advancement paths.
                 </p>
               </div>
-              
+
               <div>
-                <h3 className="text-h2 text-left mb-4" style={{ color: 'var(--midnight)' }}>
+                <h3
+                  className="text-h2 text-left mb-4"
+                  style={{ color: "var(--midnight)" }}
+                >
                   Work-Life Balance
                 </h3>
-                <p className="text-p4 text-left" style={{ color: 'var(--outer-space)' }}>
-                  Flexible working arrangements, generous PTO, and parental leave policies.
+                <p
+                  className="text-p4 text-left"
+                  style={{ color: "var(--outer-space)" }}
+                >
+                  Flexible working arrangements, generous PTO, and parental
+                  leave policies.
                 </p>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
-      
+
       {/* Company Culture Section */}
-      <section 
-        data-section="culture" 
+      <section
+        data-section="culture"
         className="w-[100vw] min-h-[100vh] flex items-center justify-center bg-[var(--dawn)]"
       >
         <div className="container-responsive py-[100px]">
@@ -256,25 +326,41 @@ export default function Careers() {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h2 className="text-h3 text-left mb-8" style={{ color: 'var(--midnight)' }}>
+            <h2
+              className="text-h3 text-left mb-8"
+              style={{ color: "var(--midnight)" }}
+            >
               Our Culture
             </h2>
-            
-            <p className="text-p4 text-left mb-6" style={{ color: 'var(--outer-space)' }}>
-              At Alveria Capital, we foster a collaborative environment where innovative thinking is encouraged and rewarded. We believe in creating a diverse and inclusive workplace where everyone's voice is heard and valued.
+
+            <p
+              className="text-p4 text-left mb-6"
+              style={{ color: "var(--outer-space)" }}
+            >
+              At Alveria Capital, we foster a collaborative environment where
+              innovative thinking is encouraged and rewarded. We believe in
+              creating a diverse and inclusive workplace where everyone's voice
+              is heard and valued.
             </p>
-            
-            <p className="text-p4 text-left" style={{ color: 'var(--outer-space)' }}>
-              Our team consists of passionate individuals who are not only experts in their respective fields but also share a common goal of delivering exceptional results for our clients. We prioritize integrity, respect, and continuous improvement in everything we do.
+
+            <p
+              className="text-p4 text-left"
+              style={{ color: "var(--outer-space)" }}
+            >
+              Our team consists of passionate individuals who are not only
+              experts in their respective fields but also share a common goal of
+              delivering exceptional results for our clients. We prioritize
+              integrity, respect, and continuous improvement in everything we
+              do.
             </p>
           </motion.div>
         </div>
       </section>
-      
+
       {/* Footer Section */}
       <section data-section="footer">
         <Footer />
       </section>
     </div>
   );
-} 
+}
