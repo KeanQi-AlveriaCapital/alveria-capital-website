@@ -1,0 +1,744 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf') format('truetype-variations');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+  font-weight: 100 1000;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/Playfair_Display/PlayfairDisplay-Italic-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 1000;
+  font-style: italic;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Base Collection Variables */
+  --color-midnight: var(--midnight);
+  --color-mercury: var(--mercury);
+  --color-sherpa-blue: var(--sherpa-blue);
+  --color-outer-space: var(--outer-space);
+  --color-dawn: var(--dawn);
+  --color-submarine: var(--submarine);
+  --text-body-small: var(--body-small);
+
+  /* Font Variables */
+  --font-body: var(--dm-sans);
+  --font-heading: var(--playfair-display);
+
+  /* Responsive Typography Variables */
+  --text-p1: var(--p1-size);
+  --text-p2: var(--p2-size);
+  --text-p3: var(--p3-size);
+  --text-p4: var(--p4-size);
+  --text-h1: var(--h1-size);
+  --text-h2: var(--h2-size);
+  --text-h3: var(--h3-size);
+  --text-h4: var(--h4-size);
+  --text-h5: var(--h5-size);
+
+  /* Responsive Line Height Variables */
+  --leading-p1: var(--p1-line-height);
+  --leading-p2: var(--p2-line-height);
+  --leading-p3: var(--p3-line-height);
+  --leading-p4: var(--p4-line-height);
+  --leading-h1: var(--h1-line-height);
+  --leading-h2: var(--h2-line-height);
+  --leading-h3: var(--h3-line-height);
+  --leading-h4: var(--h4-line-height);
+  --leading-h5: var(--h5-line-height);
+
+  /* Container Variables */
+  --container-max-width: var(--cont-max-w);
+  --section-padding-x: var(--section-side-padding);
+  --section-padding-y: var(--section-top-padding);
+  --gap-heading-sub: var(--heading-sub-gap);
+  --gap-heading-content: var(--heading-content-gap);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Base Collection Values */
+  --body-small: 16px;
+  --midnight: #09162C;
+  --mercury: #E8E8E8;
+  --sherpa-blue: #05454F;
+  --outer-space: #343A40;
+  --dawn: #A19E98;
+  --submarine: #B5C5C7;
+
+  /* Font Values */
+  --dm-sans: 'DM Sans', sans-serif;
+  --playfair-display: 'Playfair Display', serif;
+
+  /* Base/Desktop Typography Sizes */
+  --p1-size: 12px;
+  --p2-size: 14px;
+  --p3-size: 16px;
+  --p4-size: 18px;
+  --h1-size: 24px;
+  --h2-size: 48px;
+  --h3-size: 56px;
+  --h4-size: 72px;
+  --h5-size: 96px;
+
+  /* Base/Desktop Line Heights */
+  --p1-line-height: 20px;
+  --p2-line-height: 24px;
+  --p3-line-height: 27px;
+  --p4-line-height: 31px;
+  --h1-line-height: 34px;
+  --h2-line-height: 56px;
+  --h3-line-height: 78px;
+  --h4-line-height: 101px;
+  --h5-line-height: 134px;
+
+  /* Base/Desktop Container Values */
+  --cont-max-w: 1500px;
+  --section-side-padding: 100px;
+  --section-top-padding: 100px;
+  --heading-sub-gap: 32px;
+  --heading-content-gap: 40px;
+}
+
+/* Tablet & Mobile Breakpoints */
+@media (max-width: 1299px) {
+  :root {
+    /* Tablet Typography Sizes */
+    --p1-size: 10px;
+    --p2-size: 12px;
+    --p3-size: 14px;
+    --p4-size: 16px;
+    --h1-size: 22px;
+    --h2-size: 32px;
+    --h3-size: 48px;
+    --h4-size: 56px;
+    --h5-size: 64px;
+
+    /* Tablet Line Heights */
+    --p1-line-height: 17px;
+    --p2-line-height: 20px;
+    --p3-line-height: 24px;
+    --p4-line-height: 27px;
+    --h1-line-height: 31px;
+    --h2-line-height: 45px;
+    --h3-line-height: 67px;
+    --h4-line-height: 78px;
+    --h5-line-height: 90px;
+
+    /* Tablet Container Values */
+    --cont-max-w: 1100px;
+    --section-side-padding: 64px;
+    --section-top-padding: 80px;
+    --heading-sub-gap: 28px;
+    --heading-content-gap: 32px;
+  }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 767px) {
+  :root {
+    /* Mobile Typography Sizes */
+    --p1-size: 8px;
+    --p2-size: 10px;
+    --p3-size: 12px;
+    --p4-size: 14px;
+    --h1-size: 20px;
+    --h2-size: 24px;
+    --h3-size: 32px;
+    --h4-size: 40px;
+    --h5-size: 48px;
+
+    /* Mobile Line Heights */
+    --p1-line-height: 14px;
+    --p2-line-height: 17px;
+    --p3-line-height: 20px;
+    --p4-line-height: 24px;
+    --h1-line-height: 28px;
+    --h2-line-height: 34px;
+    --h3-line-height: 45px;
+    --h4-line-height: 56px;
+    --h5-line-height: 67px;
+
+    /* Mobile Container Values */
+    --cont-max-w: 960px;
+    --section-side-padding: 32px;
+    --section-top-padding: 64px;
+    --heading-sub-gap: 24px;
+    --heading-content-gap: 24px;
+  }
+}
+
+/* Small Mobile Breakpoint - Extra customization */
+@media (max-width: 478px) {
+  :root {
+    /* Tighter spacing for very small screens */
+    --section-side-padding: 24px;
+    --section-top-padding: 48px;
+    --heading-sub-gap: 20px;
+    --heading-content-gap: 20px;
+  }
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-[var(--font-body)];
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Responsive Typography Classes */
+@layer utilities {
+  .text-p1 {
+    font-size: var(--text-p1);
+    line-height: var(--leading-p1);
+  }
+
+  .text-p2 {
+    font-size: var(--text-p2);
+    line-height: var(--leading-p2);
+  }
+
+  .text-p3 {
+    font-size: var(--text-p3);
+    line-height: var(--leading-p3);
+  }
+
+  .text-p4 {
+    font-size: var(--text-p4);
+    line-height: var(--leading-p4);
+  }
+
+  .text-h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-family: var(--font-heading);
+  }
+
+  .text-h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-family: var(--font-heading);
+  }
+
+  .text-h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-family: var(--font-heading);
+  }
+
+  .text-h4 {
+    font-size: var(--text-h4);
+    line-height: var(--leading-h4);
+    font-family: var(--font-heading);
+  }
+
+  .text-h5 {
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-family: var(--font-heading);
+  }
+
+  .container-responsive {
+    max-width: var(--container-max-width);
+    padding-left: var(--section-padding-x);
+    padding-right: var(--section-padding-x);
+    margin: 0 auto;
+  }
+
+  .section-spacing {
+    padding-top: var(--section-padding-y);
+    padding-bottom: var(--section-padding-y);
+  }
+
+  .gap-heading-sub {
+    gap: var(--gap-heading-sub);
+  }
+
+  .gap-heading-content {
+    gap: var(--gap-heading-content);
+  }
+
+  /* Section Padding Utilities for Mobile/Tablet */
+  .section-padding-mobile {
+    padding: 48px 32px;
+  }
+
+  .section-padding-mobile-sm {
+    padding: 32px 24px;
+  }
+
+  .section-padding-mobile-lg {
+    padding: 64px 40px;
+  }
+
+  /* Responsive Section Padding - Using Tailwind breakpoints */
+  .section-padding-responsive {
+    padding: 32px 24px; /* Mobile (default) */
+  }
+
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1299px) {
+    .section-padding-responsive {
+      padding: 64px 48px;
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 1300px) {
+    .section-padding-responsive {
+      padding: 100px;
+    }
+  }
+
+  /* Button Styles */
+  .btn-investor {
+    font-family: 'Proxima Nova', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: var(--text-p3);
+    font-weight: 600;
+    line-height: 1.25rem;
+    border-radius: 4px;
+    border: none;
+    padding: 12px 24px;
+    background-color: var(--dawn);
+    color: var(--midnight);
+    transition: all 300ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0 0 0 1px var(--dawn);
+    width: fit-content;
+  }
+
+  .btn-investor:hover {
+    background-color: var(--outer-space);
+    color: white;
+  }
+
+  .btn-investor:active {
+    transform: scale(0.95);
+  }
+
+  /* Language toggle border */
+  .lang-toggle-border {
+    box-shadow: 0 0 0 1px var(--dawn);
+  }
+  
+  /* Newsletter input border */
+  .newsletter-input-border {
+    box-shadow: 0 0 0 1px var(--dawn);
+  }
+
+  /* Responsive button text colors */
+  .nav-dark .btn-investor {
+    color: var(--midnight) !important;
+  }
+
+  .nav-light .btn-investor {
+    color: white !important;
+  }
+
+  .nav-dark .btn-investor:hover {
+    background-color: rgba(52, 58, 64, 0.2) !important; /* Match language toggle hover */
+    color: var(--midnight) !important;
+  }
+
+  .nav-light .btn-investor:hover {
+    color: white !important;
+  }
+
+  /* Dark mode navigation styles */
+  .nav-dark .logo {
+    filter: brightness(0) saturate(100%) !important;
+  }
+
+  .nav-dark .nav-text {
+    color: var(--midnight) !important;
+  }
+
+  .nav-dark .nav-underline {
+    background-color: var(--midnight) !important;
+  }
+
+  .nav-dark .menu-icon {
+    color: var(--midnight) !important;
+  }
+
+  /* Light mode navigation styles (default) */
+  .nav-light .logo {
+    filter: none !important;
+  }
+
+  .nav-light .nav-text {
+    color: var(--mercury) !important;
+  }
+
+  .nav-light .nav-underline {
+    background-color: var(--mercury) !important;
+  }
+
+  .nav-light .menu-icon {
+    color: var(--mercury) !important;
+  }
+
+  /* Additional styles for AnimatedNavLink elements */
+  .nav-dark a[href] {
+    color: var(--midnight) !important;
+  }
+
+  .nav-light a[href] {
+    color: var(--mercury) !important;
+  }
+
+  /* Remove default button styling from NavigationMenuLink */
+  [data-radix-navigation-menu-link] {
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    font-weight: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  [data-radix-navigation-menu-link]:hover {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  [data-radix-navigation-menu-link]:focus {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* Ensure nav links don't have button styling */
+  .nav-text {
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Specific targeting for NavigationMenuLink components */
+  .nav-dark [data-radix-navigation-menu-link] {
+    color: var(--midnight) !important;
+  }
+
+  .nav-light [data-radix-navigation-menu-link] {
+    color: var(--mercury) !important;
+  }
+
+  /* Ensure AnimatedNavLink components use correct colors */
+  nav.nav-dark a {
+    color: var(--midnight) !important;
+  }
+
+  nav.nav-light a {
+    color: var(--mercury) !important;
+  }
+
+  /* Ultra-specific targeting for NavigationMenuLink - force midnight on light backgrounds */
+  nav.nav-dark [data-radix-navigation-menu-link],
+  nav.nav-dark a[data-radix-navigation-menu-link],
+  nav.nav-dark .nav-text,
+  nav.nav-dark a.nav-text,
+  .nav-dark [data-radix-navigation-menu-link],
+  .nav-dark a[data-radix-navigation-menu-link],
+  .nav-dark .nav-text,
+  .nav-dark a.nav-text,
+  .nav-dark a[href],
+  nav.nav-dark a[href] {
+    color: var(--midnight) !important;
+  }
+
+  /* Ultra-specific targeting for NavigationMenuLink - force mercury on dark backgrounds */
+  nav.nav-light [data-radix-navigation-menu-link],
+  nav.nav-light a[data-radix-navigation-menu-link],
+  nav.nav-light .nav-text,
+  nav.nav-light a.nav-text,
+  .nav-light [data-radix-navigation-menu-link],
+  .nav-light a[data-radix-navigation-menu-link],
+  .nav-light .nav-text,
+  .nav-light a.nav-text,
+  .nav-light a[href],
+  nav.nav-light a[href] {
+    color: var(--mercury) !important;
+  }
+
+  /* Target NavigationMenuItem and NavigationMenuList items specifically */
+  .nav-dark [data-radix-navigation-menu-item] a,
+  .nav-dark [data-radix-navigation-menu-list] a,
+  nav.nav-dark [data-radix-navigation-menu-item] a,
+  nav.nav-dark [data-radix-navigation-menu-list] a {
+    color: var(--midnight) !important;
+  }
+
+  .nav-light [data-radix-navigation-menu-item] a,
+  .nav-light [data-radix-navigation-menu-list] a,
+  nav.nav-light [data-radix-navigation-menu-item] a,
+  nav.nav-light [data-radix-navigation-menu-list] a {
+    color: var(--mercury) !important;
+  }
+
+  /* Language toggle responsive text colors - increased specificity */
+  .nav-dark .toggle-item,
+  .nav-dark [data-radix-collection-item] {
+    color: var(--midnight) !important;
+  }
+
+  .nav-light .toggle-item,
+  .nav-light [data-radix-collection-item] {
+    color: var(--mercury) !important;
+  }
+
+  .nav-dark .toggle-item[data-state="on"],
+  .nav-dark [data-radix-collection-item][data-state="on"] {
+    color: var(--mercury) !important;
+  }
+
+  .nav-light .toggle-item[data-state="on"],
+  .nav-light [data-radix-collection-item][data-state="on"] {
+    color: var(--midnight) !important;
+  }
+
+  .nav-dark .toggle-item:hover,
+  .nav-dark [data-radix-collection-item]:hover {
+    color: white !important;
+  }
+
+  .nav-light .toggle-item:hover,
+  .nav-light [data-radix-collection-item]:hover {
+    color: white !important;
+  }
+
+  /* Maximum specificity for ToggleGroup items */
+  nav.nav-light [role="radiogroup"] button {
+    color: var(--mercury) !important;
+  }
+
+  nav.nav-dark [role="radiogroup"] button {
+    color: var(--midnight) !important;
+  }
+
+  nav.nav-light [role="radiogroup"] button[data-state="on"],
+  nav.nav-light button[data-state="on"].toggle-item {
+    color: var(--mercury) !important;
+  }
+
+  nav.nav-dark [role="radiogroup"] button[data-state="on"],
+  nav.nav-dark button[data-state="on"].toggle-item {
+    color: var(--midnight) !important;
+  }
+
+  /* Hover background color fix for light sections - only inactive buttons */
+  nav.nav-dark [role="radiogroup"] button:not([data-state="on"]):hover,
+  nav.nav-dark button.toggle-item:not([data-state="on"]):hover {
+    background-color: rgba(52, 58, 64, 0.2) !important; /* Lighter outer-space shade */
+    color: var(--midnight) !important;
+  }
+
+  /* Hover background color for hero sections - only inactive buttons */
+  nav.nav-light [role="radiogroup"] button:not([data-state="on"]):hover,
+  nav.nav-light button.toggle-item:not([data-state="on"]):hover {
+    background-color: var(--outer-space) !important;
+    color: white !important;
+  }
+
+  /* Ultra-specific targeting for ToggleGroup buttons */
+  nav.nav-light div[role="radiogroup"] button.toggle-item,
+  nav.nav-light [data-radix-collection-item].toggle-item,
+  nav.nav-light button[data-radix-collection-item],
+  nav.nav-light [role="radiogroup"] button[type="button"] {
+    color: var(--mercury) !important;
+  }
+
+  nav.nav-dark div[role="radiogroup"] button.toggle-item,
+  nav.nav-dark [data-radix-collection-item].toggle-item,
+  nav.nav-dark button[data-radix-collection-item],
+  nav.nav-dark [role="radiogroup"] button[type="button"] {
+    color: var(--midnight) !important;
+  }
+
+  /* Specific targeting for active states */
+  nav.nav-light [role="radiogroup"] button[data-state="on"],
+  nav.nav-light button[data-state="on"].toggle-item {
+    color: var(--mercury) !important;
+  }
+
+  nav.nav-dark [role="radiogroup"] button[data-state="on"],
+  nav.nav-dark button[data-state="on"].toggle-item {
+    color: var(--midnight) !important;
+  }
+
+  /* Override shadcn NavigationMenuLink default hover/focus states */
+  .nav-dark [data-slot="navigation-menu-link"]:hover,
+  .nav-dark [data-slot="navigation-menu-link"]:focus,
+  nav.nav-dark [data-slot="navigation-menu-link"]:hover,
+  nav.nav-dark [data-slot="navigation-menu-link"]:focus {
+    color: var(--midnight) !important;
+    background: none !important;
+  }
+
+  .nav-light [data-slot="navigation-menu-link"]:hover,
+  .nav-light [data-slot="navigation-menu-link"]:focus,
+  nav.nav-light [data-slot="navigation-menu-link"]:hover,
+  nav.nav-light [data-slot="navigation-menu-link"]:focus {
+    color: var(--mercury) !important;
+    background: none !important;
+  }
+
+  /* Override shadcn default text colors for NavigationMenuLink */
+  .nav-dark [data-slot="navigation-menu-link"],
+  nav.nav-dark [data-slot="navigation-menu-link"] {
+    color: var(--midnight) !important;
+  }
+
+  .nav-light [data-slot="navigation-menu-link"],
+  nav.nav-light [data-slot="navigation-menu-link"] {
+    color: var(--mercury) !important;
+  }
+}
+

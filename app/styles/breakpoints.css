@@ -1,0 +1,108 @@
+/**
+ * SIMPLIFIED BREAKPOINT USAGE EXAMPLES
+ * 
+ * This file demonstrates how to use the 4 consolidated breakpoints
+ * defined in tailwind.config.js:
+ * - mobile: 0-767px
+ * - tablet: 768px-1299px  
+ * - desktop: 1300px-1535px
+ * - xl: 1536px+
+ */
+
+/* 
+ * OPTION 1: TAILWIND RESPONSIVE CLASSES (RECOMMENDED)
+ * Use Tailwind's responsive prefixes in your components
+ */
+
+/* Using standard Tailwind prefixes (sm, md, lg, xl) */
+/*
+<div className="
+  text-sm md:text-base lg:text-lg xl:text-xl  
+  p-4 md:p-6 lg:p-8 xl:p-10
+  flex-col md:flex-row
+">
+  Responsive content
+</div>
+*/
+
+/* Using semantic breakpoint names */
+/*
+<div className="
+  text-sm tablet:text-base desktop:text-lg extra-large:text-xl
+  p-4 tablet:p-6 desktop:p-8 extra-large:p-10
+  flex-col tablet:flex-row
+">
+  Responsive content with semantic names
+</div>
+*/
+
+/*
+ * OPTION 2: MEDIA QUERIES WITH EXACT BREAKPOINTS
+ * Use when you need precise control in CSS
+ */
+
+/* Mobile Only (0-767px) */
+@media (max-width: 767px) {
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Tablet Only (768px-1299px) */
+@media (min-width: 768px) and (max-width: 1299px) {
+  .tablet-only {
+    display: block;
+  }
+}
+
+/* Desktop Only (1300px-1535px) */
+@media (min-width: 1300px) and (max-width: 1535px) {
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* Extra Large (1536px+) */
+@media (min-width: 1536px) {
+  .xl-only {
+    display: block;
+  }
+}
+
+/*
+ * OPTION 3: SASS/SCSS MIXINS
+ * If you're using SASS/SCSS, you can create mixins:
+ * 
+ * @mixin mobile {
+ *   @media (max-width: 767px) { @content; }
+ * }
+ * 
+ * @mixin tablet {
+ *   @media (min-width: 768px) and (max-width: 1299px) { @content; }
+ * }
+ * 
+ * @mixin desktop {
+ *   @media (min-width: 1300px) and (max-width: 1535px) { @content; }
+ * }
+ * 
+ * @mixin xl {
+ *   @media (min-width: 1536px) { @content; }
+ * }
+ * 
+ * Usage:
+ * .element {
+ *   font-size: 14px; // Default (mobile)
+ *   
+ *   @include tablet {
+ *     font-size: 16px;
+ *   }
+ *   
+ *   @include desktop {
+ *     font-size: 18px;
+ *   }
+ *   
+ *   @include xl {
+ *     font-size: 20px;
+ *   }
+ * }
+ */ 
