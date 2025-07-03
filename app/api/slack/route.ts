@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-// Slack configuration - Move these to .env.local for security
-const SLACK_WEBHOOK_URL =
-  "https://hooks.slack.com/services/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";
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
 const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID;
 
