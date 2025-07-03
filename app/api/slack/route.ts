@@ -202,7 +202,7 @@ export async function POST(request: NextRequest) {
 
     // Send webhook notification
     try {
-      await axios.post(SLACK_WEBHOOK_URL, slackMessage);
+      await axios.post(SLACK_WEBHOOK_URL ?? "", slackMessage);
       console.log("✅ Webhook notification sent successfully");
     } catch (webhookError) {
       console.error("Webhook notification failed:", webhookError);
