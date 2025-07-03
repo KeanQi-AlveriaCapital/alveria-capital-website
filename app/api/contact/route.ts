@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
 // Slack configuration
-const SLACK_WEBHOOK_URL =
-  "https://hooks.slack.com/services/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";
+const SLACK_WEBHOOK_URL = process.env.SLACK_CONTACT_WEBHOOK_URL;
 
 export async function POST(request: NextRequest) {
   try {
