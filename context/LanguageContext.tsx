@@ -26,7 +26,7 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 // Define the translations object
-const translations: Record<Language, Record<string, string>> = {
+export const translations: Record<Language, Record<string, string>> = {
   EN: {
     // Navigation
     "nav.whoWeAre": "Who we are",
@@ -158,6 +158,69 @@ const translations: Record<Language, Record<string, string>> = {
     "contactus.section3.title": "Thank you",
     "contactus.section3.description":
       "Your message has been received. We'll get back to you shortly.",
+
+    //Career Section
+    "career.title": "Careers",
+    "career.description":
+      "Join our team of talented professionals and help shape the future of investment management",
+    "career.section1.title": "Current Openings",
+    "career.section2.title": "Benefits & Perks",
+    "career.section2.subtitle1": "Competitive Compensation",
+    "career.section2.description1":
+      "We offer industry-leading salaries and bonus structures, with significant performance-based incentives.",
+    "career.section2.subtitle2": "Growth & Development",
+    "career.section2.description2":
+      "Continuous learning opportunities, professional certifications, and career advancement paths.",
+    "career.section2.subtitle3": "Work-Life Balance",
+    "career.section2.description3":
+      "Flexible working arrangements, generous PTO, and parental leave policies.",
+    "career.section3.title": "Our Culture",
+    "career.section3.description1":
+      "At Alveria Capital, we foster a collaborative environment where innovative thinking is encouraged and rewarded. We believe in creating a diverse and inclusive workplace where everyone's voice is heard and valued.",
+    "career.section3.description2":
+      "Our team consists of passionate individuals who are not only experts in their respective fields but also share a common goal of delivering exceptional results for our clients. We prioritize integrity, respect, and continuous improvement in everything we do.",
+
+    //Position Open Section
+    "career.openposition.adminassistant": "Admin Assistant",
+    "career.openposition.adminassistant.jobdescription":
+      "Provides administrative and organizational support to the trading or research team. Handles scheduling, documentation, travel arrangements, and office coordination to ensure smooth daily operations.",
+    "career.openposition.complianceofficer": "Compliance Officer",
+    "career.openposition.complianceofficer.jobdescription":
+      "Ensures the company adheres to financial regulations, trading laws, and internal policies. Acts as a safeguard against regulatory breaches and helps manage risk.",
+    "career.openposition.seniortrader": "Senior Trader",
+    "career.openposition.seniortrader.jobdescription":
+      "Leads the design, execution, and optimization of trading strategies. Responsible for significant capital deployment, managing risk, and mentoring junior traders.",
+    "career.openposition.trader": "Trader",
+    "career.openposition.trader.jobdescription":
+      "Executes trades and monitors market trends to identify profit opportunities. Balances speed and accuracy, often within automated or semi-automated systems.",
+    "career.openposition.juniorfrontenddeveloper":
+      "Junior Frontend Developer – Quantitative Trading Systems",
+    "career.openposition.juniorfrontenddeveloper.jobdescription":
+      "Assists in building and maintaining user interfaces for trading platforms and data dashboards. Works closely with traders, quants, and backend developers.",
+    "career.openposition.quantitativeresearcher": "Quantitative Researcher",
+    "career.openposition.quantitativeresearcher.jobdescription":
+      "Develops and tests mathematical models to generate alpha and manage risk. Works at the intersection of statistics, machine learning, and financial theory.",
+
+    //Career Job Type Section
+    "career.jobdetails.fulltime": "Full-time",
+    "career.jobdetails.singapore": "Singapore",
+    "career.jobdetails.applynow": "Apply now",
+
+    //Career Application Form Section
+    "career.application.title": "Apply for Position",
+    "career.application.description":
+      "Submit your application for this position. Please provide your name and upload your resume",
+    "career.application.name": "Full name",
+    "career.application.name.placeholder": "Enter your full name",
+    "career.application.resume": "Resume",
+    "career.application.coverletter": "Cover Letter (Optional)",
+    "career.application.coverletter.placeholder":
+      "Tell us why you're interested in this position",
+    "career.application.cancel": "Cancel",
+    "career.application.submitapplication": "Submit Application",
+    "career.application.submitapplication.loading": "Sending...",
+    "career.application.success":
+      "Resume submitted successfully! We'll be in touch soon.",
   },
   中文: {
     // Navigation
@@ -286,6 +349,68 @@ const translations: Record<Language, Record<string, string>> = {
     "contactus.section2.button.onclick": "发送中...",
     "contactus.section3.title": "谢谢",
     "contactus.section3.description": "我们已收到您的留言，将尽快与您联系。",
+
+    //Career section
+    "career.title": "职业机会",
+    "career.description":
+      "加入我们才华横溢的专业团队，共同塑造投资管理的未来。",
+    "career.section1.title": "当前职位空缺",
+    "career.section2.title": "福利与津贴",
+    "career.section2.subtitle1": "具有竞争力的薪酬",
+    "career.section2.description1":
+      "我们提供业内领先的薪资和奖金结构，并设有可观的绩效激励机制。",
+    "career.section2.subtitle2": "成长与发展",
+    "career.section2.description2":
+      "持续学习机会、专业认证支持以及清晰的职业发展路径。",
+    "career.section2.subtitle3": "工作与生活平衡",
+    "career.section2.description3":
+      "灵活的工作安排、充足的带薪休假以及完善的育儿假政策。",
+    "career.section3.title": "我们的文化",
+    "career.section3.description1":
+      "在 Alveria Capital，我们营造一个协作的工作环境，鼓励并奖励创新思维。我们致力于打造一个多元、包容的工作场所，让每个人的声音都被听见和重视。",
+    "career.section3.description2":
+      "我们的团队由充满热情的专业人士组成，他们不仅是各自领域的专家，也共同致力于为客户提供卓越的成果。我们在一切工作中都秉持诚信、尊重与持续改进的原则。",
+
+    //Position Open Section
+    "career.openposition.adminassistant": "行政助理",
+    "career.openposition.adminassistant.jobdescription":
+      "为交易或研究团队提供行政和组织支持。负责日程安排、文件处理、差旅安排和办公室协调，确保日常运营顺畅。",
+    "career.openposition.complianceofficer": "合规专员",
+    "career.openposition.complianceofficer.jobdescription":
+      "确保公司遵守金融法规、交易法律和内部政策。防止合规风险事件的发生，协助管理整体风险。",
+    "career.openposition.seniortrader": "高级交易员",
+    "career.openposition.seniortrader.jobdescription":
+      "主导交易策略的设计、执行与优化。负责大规模资金的部署、风险控制，并指导初级交易员。",
+    "career.openposition.trader": "交易员",
+    "career.openposition.trader.jobdescription":
+      "执行交易操作并监控市场趋势以识别获利机会。需在自动化或半自动化系统中兼顾速度与准确性。",
+    "career.openposition.juniorfrontenddeveloper":
+      "初级前端开发工程师 - 量化交易系统",
+    "career.openposition.juniorfrontenddeveloper.jobdescription":
+      "协助构建和维护用于交易平台与数据仪表板的用户界面。与交易员、量化研究员和后端开发人员紧密合作。",
+    "career.openposition.quantitativeresearcher": "量化研究员",
+    "career.openposition.quantitativeresearcher.jobdescription":
+      "开发和测试数学模型以创造超额收益并控制风险。工作涉及统计学、机器学习与金融理论的交叉领域。",
+
+    //Career Job Type Section
+    "career.jobdetails.fulltime": "全职",
+    "career.jobdetails.singapore": "新加坡",
+    "career.jobdetails.applynow": "加入我们",
+
+    //Career Application Form Section
+    "career.application.title": "申请职位",
+    "career.application.description":
+      "提交您对该职位的申请。请填写您的姓名并上传简历",
+    "career.application.name": "姓名",
+    "career.application.name.placeholder": "请输入您的全名",
+    "career.application.resume": "简历",
+    "career.application.coverletter": "求职信（可选）",
+    "career.application.coverletter.placeholder":
+      "请告诉我们您对该职位感兴趣的原因",
+    "career.application.cancel": "取消",
+    "career.application.submitapplication": "提交申请",
+    "career.application.submitapplication.loading": "发送中",
+    "career.application.success": "简历提交成功！我们将尽快与您联系。",
   },
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLanguage } from "@/context/LanguageContext";
+import { translations, useLanguage } from "@/context/LanguageContext";
 import Navigation from "@/components/custom/Navigation";
 import Footer from "@/components/custom/Footer";
 import AnimatedText from "@/components/AnimatedText";
@@ -9,11 +9,44 @@ import { CardGrid } from "@/components/custom";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+
+interface ApplcationFormData {
+  name: string;
+  position: string;
+  resume: File | null;
+  coverletter: File | null;
+}
 
 export default function Careers() {
   const { t } = useLanguage();
   const [currentSection, setCurrentSection] = useState("hero");
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState("");
+  const [formData, setFormData] = useState<ApplcationFormData>({
+    name: "",
+    position: "",
+    resume: null,
+    coverletter: null,
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [result, setResult] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   // Register GSAP plugins
   useEffect(() => {
@@ -57,102 +90,209 @@ export default function Careers() {
     };
   }, []);
 
-  // Sample job openings
-  const jobOpenings = [
-    {
-      title: "Admin Assistant",
-      tags: [
-        { text: "Remote", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" },
-      ],
-      description:
-        "Provides administrative and organizational support to the trading or research team. Handles scheduling, documentation, travel arrangements, and office coordination to ensure smooth daily operations.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true,
-      },
-    },
-    {
-      title: "Compliance Officer",
-      tags: [
-        { text: "Singapore", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" },
-      ],
-      description:
-        "Ensures the company adheres to financial regulations, trading laws, and internal policies. Acts as a safeguard against regulatory breaches and helps manage risk.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true,
-      },
-    },
-    {
-      title: "Senior Trader",
-      tags: [
-        { text: "Remote", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" },
-      ],
-      description:
-        "Leads the design, execution, and optimization of trading strategies. Responsible for significant capital deployment, managing risk, and mentoring junior traders.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true,
-      },
-    },
-    {
-      title: "Trader",
-      tags: [
-        { text: "Singapore", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" },
-      ],
-      description:
-        "Executes trades and monitors market trends to identify profit opportunities. Balances speed and accuracy, often within automated or semi-automated systems.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true,
-      },
-    },
-    {
-      title: "Junior Frontend Developer - Quantitative Trading Systems",
-      tags: [
-        { text: "Singapore", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" },
-      ],
-      description:
-        "Assists in building and maintaining user interfaces for trading platforms and data dashboards. Works closely with traders, quants, and backend developers.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true,
-      },
-    },
-    {
-      title: "Quantitative Researcher",
-      tags: [
-        { text: "Singapore", backgroundColor: "var(--submarine)" },
-        { text: "Full-time", backgroundColor: "var(--dawn)" },
-      ],
-      description:
-        "Develops and tests mathematical models to generate alpha and manage risk. Works at the intersection of statistics, machine learning, and financial theory.",
-      link: {
-        text: "Apply now",
-        url: "#",
-        color: "var(--sherpa-blue)",
-        showArrow: true,
-      },
-    },
-  ];
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    const file = e.target.files?.[0] || null;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: file,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setResult(null);
+
+    const submitData = new FormData();
+    submitData.append("name", formData.name);
+    submitData.append("position", t(currentPosition));
+    if (formData.resume) {
+      submitData.append("resume", formData.resume);
+    }
+
+    try {
+      const response = await fetch("/api/slack", {
+        method: "POST",
+        body: submitData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult({
+          success: true,
+          message: "Resume submitted successfully! We'll be in touch soon.",
+        });
+        setFormData({
+          name: "",
+          position: "",
+          resume: null,
+          coverletter: null,
+        });
+        setIsOpenDialog(false);
+        toast(t("career.application.success"));
+        // Reset file input
+        const fileInput = document.getElementById("resume") as HTMLInputElement;
+        if (fileInput) fileInput.value = "";
+      } else {
+        setResult({ success: false, message: data.message });
+      }
+    } catch (error) {
+      setResult({
+        success: false,
+        message: "Error submitting resume. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const generateJobOpeningsKeys = (
+    translations: Record<string, string>
+  ): any[] => {
+    const openings: any[] = [];
+
+    for (const key in translations) {
+      if (
+        key.startsWith("career.openposition.") &&
+        key.endsWith(".jobdescription")
+      ) {
+        const baseKey = key.replace(".jobdescription", ""); // e.g., "career.openposition.adminassistant"
+
+        const job = {
+          title: baseKey,
+          description: `${baseKey}.jobdescription`,
+          tags: [
+            {
+              text: "career.jobdetails.fulltime",
+              backgroundColor: "var(--dawn)",
+            },
+            {
+              text: "career.jobdetails.singapore",
+              backgroundColor: "var(--submarine)",
+            },
+          ],
+          link: {
+            text: "career.jobdetails.applynow",
+            onClick: () => {
+              setIsOpenDialog(true);
+              setCurrentPosition(baseKey);
+            },
+            color: "var(--sherpa-blue)",
+            showArrow: true,
+          },
+        };
+
+        openings.push(job);
+      }
+    }
+
+    return openings;
+  };
 
   return (
     <div className="relative">
+      <Dialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
+        <DialogContent
+          className="sm:max-w-[500px]"
+          style={{
+            backgroundColor: "var(--mercury)",
+            borderColor: "var(--outer-space)",
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <DialogHeader>
+              <DialogTitle style={{ color: "var(--midnight)" }}>
+                {t("career.application.title")}: {t(currentPosition)}
+              </DialogTitle>
+              <DialogDescription style={{ color: "var(--outer-space)" }}>
+                {t("career.application.description")}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 mb-4 pt-2">
+              <div className="grid gap-3">
+                <Label
+                  htmlFor="applicant-name"
+                  style={{ color: "var(--midnight)" }}
+                >
+                  {t("career.application.name")} *
+                </Label>
+                <Input
+                  id="applicant-name"
+                  name="name"
+                  placeholder={t("career.application.name.placeholder")}
+                  required
+                  onChange={handleInputChange}
+                  style={{
+                    backgroundColor: "white",
+                    borderColor: "var(--outer-space)",
+                    color: "var(--midnight)",
+                  }}
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label
+                  htmlFor="resume-upload"
+                  style={{ color: "var(--midnight)" }}
+                >
+                  {t("career.application.resume")} *{" "}
+                </Label>
+                <Input
+                  id="resume-upload"
+                  name="resume"
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  required
+                  onChange={handleFileChange}
+                  style={{
+                    backgroundColor: "white",
+                    borderColor: "var(--outer-space)",
+                    color: "var(--midnight)",
+                  }}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button
+                  variant="outline"
+                  style={{
+                    borderColor: "var(--outer-space)",
+                    color: "var(--midnight)",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  {t("career.application.cancel")}
+                </Button>
+              </DialogClose>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                style={{
+                  backgroundColor: "var(--sherpa-blue)",
+                  color: "var(--mercury)",
+                  border: "none",
+                }}
+              >
+                {isSubmitting
+                  ? t("career.application.submitapplication.loading")
+                  : t("career.application.submitapplication")}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
       {/* Fixed Navigation */}
       <Navigation isDarkMode={isDarkMode} />
 
@@ -189,7 +329,7 @@ export default function Careers() {
               style={{ color: "var(--mercury)" }}
               delay={0.1}
             >
-              Careers
+              {t("career.title")}
             </AnimatedText>
             <motion.p
               initial={{ opacity: 0 }}
@@ -198,8 +338,7 @@ export default function Careers() {
               className="text-p4 text-center max-w-2xl mx-auto"
               style={{ color: "var(--mercury)" }}
             >
-              Join our team of talented professionals and help shape the future
-              of investment management
+              {t("career.description")}
             </motion.p>
           </motion.div>
         </div>
@@ -212,9 +351,9 @@ export default function Careers() {
       >
         <div className="container-responsive py-[100px]">
           <CardGrid
-            title="Current Openings"
+            title={"career.section1.title"}
             titleColor="var(--midnight)"
-            cards={jobOpenings}
+            cards={generateJobOpeningsKeys(translations.EN)}
             columns={{
               mobile: 1,
               tablet: 2,
@@ -241,7 +380,7 @@ export default function Careers() {
               className="text-h3 text-left mb-8"
               style={{ color: "var(--midnight)" }}
             >
-              Benefits & Perks
+              {t("career.section2.title")}
             </h2>
 
             <div className="space-y-8">
@@ -250,14 +389,13 @@ export default function Careers() {
                   className="text-h2 text-left mb-4"
                   style={{ color: "var(--midnight)" }}
                 >
-                  Competitive Compensation
+                  {t("career.section2.subtitle1")}
                 </h3>
                 <p
                   className="text-p4 text-left"
                   style={{ color: "var(--outer-space)" }}
                 >
-                  We offer industry-leading salaries and bonus structures, with
-                  significant performance-based incentives.
+                  {t("career.section2.description1")}
                 </p>
               </div>
 
@@ -266,14 +404,13 @@ export default function Careers() {
                   className="text-h2 text-left mb-4"
                   style={{ color: "var(--midnight)" }}
                 >
-                  Health & Wellness
+                  {t("career.section2.subtitle2")}
                 </h3>
                 <p
                   className="text-p4 text-left"
                   style={{ color: "var(--outer-space)" }}
                 >
-                  Comprehensive health insurance, mental health resources, gym
-                  memberships, and wellness programs.
+                  {t("career.section2.description2")}
                 </p>
               </div>
 
@@ -282,30 +419,13 @@ export default function Careers() {
                   className="text-h2 text-left mb-4"
                   style={{ color: "var(--midnight)" }}
                 >
-                  Growth & Development
+                  {t("career.section2.subtitle3")}
                 </h3>
                 <p
                   className="text-p4 text-left"
                   style={{ color: "var(--outer-space)" }}
                 >
-                  Continuous learning opportunities, professional
-                  certifications, and career advancement paths.
-                </p>
-              </div>
-
-              <div>
-                <h3
-                  className="text-h2 text-left mb-4"
-                  style={{ color: "var(--midnight)" }}
-                >
-                  Work-Life Balance
-                </h3>
-                <p
-                  className="text-p4 text-left"
-                  style={{ color: "var(--outer-space)" }}
-                >
-                  Flexible working arrangements, generous PTO, and parental
-                  leave policies.
+                  {t("career.section2.description3")}
                 </p>
               </div>
             </div>
@@ -330,28 +450,21 @@ export default function Careers() {
               className="text-h3 text-left mb-8"
               style={{ color: "var(--midnight)" }}
             >
-              Our Culture
+              {t("career.section3.title")}
             </h2>
 
             <p
               className="text-p4 text-left mb-6"
               style={{ color: "var(--outer-space)" }}
             >
-              At Alveria Capital, we foster a collaborative environment where
-              innovative thinking is encouraged and rewarded. We believe in
-              creating a diverse and inclusive workplace where everyone's voice
-              is heard and valued.
+              {t("career.section3.description1")}
             </p>
 
             <p
               className="text-p4 text-left"
               style={{ color: "var(--outer-space)" }}
             >
-              Our team consists of passionate individuals who are not only
-              experts in their respective fields but also share a common goal of
-              delivering exceptional results for our clients. We prioritize
-              integrity, respect, and continuous improvement in everything we
-              do.
+              {t("career.section3.description2")}
             </p>
           </motion.div>
         </div>

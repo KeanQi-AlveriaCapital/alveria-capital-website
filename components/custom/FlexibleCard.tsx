@@ -18,7 +18,7 @@ export interface FlexibleCardProps {
   tags?: Tag[];
   link?: {
     text: string;
-    url: string;
+    onClick: () => {};
     color?: string;
     showArrow?: boolean;
   };
@@ -74,13 +74,13 @@ const FlexibleCard: React.FC<FlexibleCardProps> = ({
     >
       {/* Title */}
       <h3 className="text-h1 text-left mb-2" style={{ color: titleColor }}>
-        {title}
+        {t(title)}
       </h3>
 
       {/* Subtitle */}
       {subtitle && (
         <p className="text-p2 text-left mb-4" style={{ color: subtitleColor }}>
-          {subtitle}
+          {t(subtitle)}
         </p>
       )}
 
@@ -96,7 +96,7 @@ const FlexibleCard: React.FC<FlexibleCardProps> = ({
                 color: tag.color || "var(--midnight)",
               }}
             >
-              {tag.text}
+              {t(tag.text)}
             </span>
           ))}
         </div>
@@ -105,19 +105,19 @@ const FlexibleCard: React.FC<FlexibleCardProps> = ({
       {/* Description */}
       {description && (
         <p className="text-p4 text-left" style={{ color: descriptionColor }}>
-          {description}
+          {t(description)}
         </p>
       )}
 
       {/* Link */}
       {link && (
         <div className="mt-4">
-          <a
-            href={link.url}
-            className="text-p3 font-medium inline-flex items-center"
+          <span
+            onClick={link.onClick}
+            className="text-p3 font-medium inline-flex items-center hover:cursor-pointer"
             style={{ color: link.color || "var(--sherpa-blue)" }}
           >
-            {link.text}
+            {t(link.text)}
             {link.showArrow && (
               <svg
                 className="w-4 h-4 ml-2"
@@ -134,7 +134,7 @@ const FlexibleCard: React.FC<FlexibleCardProps> = ({
                 ></path>
               </svg>
             )}
-          </a>
+          </span>
         </div>
       )}
     </motion.div>

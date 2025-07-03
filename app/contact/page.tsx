@@ -78,7 +78,7 @@ export default function Contact() {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Simple validation
@@ -87,25 +87,43 @@ export default function Contact() {
     }
 
     setIsSubmitting(true);
+    setSubmitStatus("idle");
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-
-      // Reset form after successful submission
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus("success");
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus("error");
+        console.error("Form submission failed:", result.message);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
 
       // Reset status after 5 seconds
       setTimeout(() => {
         setSubmitStatus("idle");
       }, 5000);
-    }, 1500);
+    }
   };
 
   return (
