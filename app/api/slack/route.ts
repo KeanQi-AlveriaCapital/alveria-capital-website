@@ -4,10 +4,8 @@ import axios from "axios";
 // Slack configuration - Move these to .env.local for security
 const SLACK_WEBHOOK_URL =
   "https://hooks.slack.com/services/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";
-const SLACK_BOT_TOKEN =
-  process.env.SLACK_BOT_TOKEN ||
-  "xoxb-8784524600579-9164378980208-v93XMFAViMU2ts89UM5CJQ0N";
-const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID || "C0946CM4EAE";
+const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
+const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID;
 
 export async function POST(request: NextRequest) {
   try {
